@@ -39,7 +39,7 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 	    apt-get autoclean && \
 	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
 
-# add user
-RUN adduser --uid 1000 --group --system avuser
-RUN mkdir -p /home/avuser/.air-video-server
-RUN chown avuser:avuser /home/avuser/.air-video-server
+# run as nobody instead of root & fix permissions  
+RUN usermod -u 99 nobody
+RUN usermod -g 100 nobody
+RUN chown -R nobody:users /opt/airvideo-server
