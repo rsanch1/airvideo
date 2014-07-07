@@ -42,10 +42,13 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 	    apt-get autoremove -y && \
 	    apt-get autoclean && \
 	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
+	   
+# AirVideo Server Configuration
+VOLUME /config
 
 # run as nobody instead of root & fix permissions  
 RUN usermod -u 99 nobody
 RUN usermod -g 100 nobody
 RUN chown -R nobody:users /opt/airvideo-server
 
-CMD java -jar /opt/airvideo-server/AirVideoServerLinux.jar /opt/airvideo-server/AirVideoServerLinux.properties
+CMD java -jar /opt/airvideo-server/AirVideoServerLinux.jar --datadir=/config
