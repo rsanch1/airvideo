@@ -23,7 +23,7 @@ RUN apt-get -y --no-install-recommends install ttf-wqy-microhei fonts-dejavu
 RUN apt-get -y --no-install-recommends install curl
 
 # airvideo server's files
-#ADD AirVideoServerLinux.properties /opt/airvideo-server/
+ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
 ADD airvideo-server /usr/bin/
 RUN mkdir -p /opt/airvideo-server/bin
@@ -43,12 +43,10 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 	    apt-get autoclean && \
 	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
 	   
-# AirVideo Server Configuration
-VOLUME /config
 
 # run as nobody instead of root & fix permissions  
 RUN usermod -u 99 nobody
 RUN usermod -g 100 nobody
 RUN chown -R nobody:users /opt/airvideo-server
 
-CMD java -jar /opt/airvideo-server/AirVideoServerLinux.jar --datadir=/config
+CMD java -jar /opt/airvideo-server/AirVideoServerLinux.jar /opt/airvideo-server/AirVideoServerLinux.properties
