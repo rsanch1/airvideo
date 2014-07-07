@@ -47,3 +47,5 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 RUN usermod -u 99 nobody
 RUN usermod -g 100 nobody
 RUN chown -R nobody:users /opt/airvideo-server
+
+CMD java -jar /opt/airvideo-server/AirVideoServerLinux.jar /opt/airvideo-server/AirVideoServerLinux.properties
