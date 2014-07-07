@@ -23,7 +23,7 @@ RUN apt-get -y --no-install-recommends install ttf-wqy-microhei fonts-dejavu
 RUN apt-get -y --no-install-recommends install curl
 
 # airvideo server's files
-ADD AirVideoServerLinux.properties /opt/airvideo-server/
+#ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
 ADD airvideo-server /usr/bin/
 RUN mkdir -p /opt/airvideo-server/bin
