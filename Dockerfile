@@ -2,7 +2,11 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER rsanch1
+MAINTAINER rsanch1 <rsanch1@gmail.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN locale-gen en_US en_US.UTF-8
 
 ADD multiverse.sources.list /etc/apt/sources.list.d/
 
