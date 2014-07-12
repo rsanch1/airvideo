@@ -13,7 +13,7 @@ CMD ["/sbin/my_init"]
 RUN usermod -u 99 nobody && \
     usermod -g 100 nobody
 
-ADD multiverse.sources.list /etc/apt/sources.list.d/
+ADD sources.list /etc/apt/
 RUN apt-get update
 RUN apt-get -y upgrade
 
@@ -58,5 +58,5 @@ RUN chmod +x /etc/my_init.d/config.sh
 
 # Add AirVideServer to runit
 RUN mkdir /etc/service/airvideo
-ADD airvideo-server.sh /etc/service/airvideo/run
+ADD airvideo_server.sh /etc/service/airvideo/run
 RUN chmod +x /etc/service/airvideo/run
