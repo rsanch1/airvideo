@@ -48,7 +48,7 @@ RUN chown -R nobody:users /opt/airvideo-server
 # Fix avahi-daemon not working without dbus
 RUN sed -i -e "s#\#enable-dbus=yes#enable-dbus=false#g" /etc/avahi/avahi-daemon.conf
 
-VOLUMES ['/config']
+VOLUME ['/config']
 
 # Add config.sh to execute during container startup
 RUN mkdir -p /etc/my_init.d
