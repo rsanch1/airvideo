@@ -11,7 +11,8 @@ CMD ["/sbin/my_init"]
 
 # Correct user and group uid/guid
 RUN usermod -u 99 nobody && \
-    usermod -g 100 nobody
+    usermod -g 100 nobody && \
+    usermod -d /config nobody
 
 ADD sources.list /etc/apt/
 RUN apt-get update
@@ -23,8 +24,8 @@ RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 
 # airvideo server's files
 ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
-RUN mkdir -p /opt/airvideo-server/bin
 RUN curl -s http://s3.amazonaws.com/AirVideo/Linux-2.4.6-beta3/AirVideoServerLinux.jar -o /opt/airvideo-server/AirVideoServerLinux.jar
+RUN mkdir -p /opt/airvideo-server/bin
 
 # compile avconv
 RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
@@ -39,20 +40,28 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 	    apt-get autoremove -y && \
 	    apt-get autoclean && \
 	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
-	   
-# Clean the build-essential package
-RUN apt-get remove build-essential yasm pkg-config libmp3lame-dev libfaac-dev
+
 
 # run as nobody instead of root & fix permissions  
 RUN chown -R nobody:users /opt/airvideo-server
 
+# Fix avahi-daemon not working without dbus
+RUN sed -i -e "s#\#enable-dbus=yes#enable-dbus=false#g" /etc/avahi/avahi-daemon.conf
+
 VOLUMES ['/config']
+
 # Add config.sh to execute during container startup
 RUN mkdir -p /etc/my_init.d
 ADD config.sh /etc/my_init.d/config.sh
 RUN chmod +x /etc/my_init.d/config.sh
 
 # Add AirVideServer to runit
-RUN mkdir /etc/service/airvideo
-ADD airvideo_server.sh /etc/service/airvideo/run
-RUN chmod +x /etc/service/airvideo/run
+RUN mkdir /etc/service/airvideo_server
+ADD airvideo_server.sh /etc/service/airvideo_server/run
+RUN chmod +x /etc/service/airvideo_server/run
+
+# Add avahi-daemon to runit
+RUN mkdir /etc/service/avahi-daemon
+ADD avahi-daemon.sh /etc/service/avahi-daemon/run
+RUN chmod +x /etc/service/avahi-daemon/run
+
