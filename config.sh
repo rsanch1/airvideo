@@ -11,4 +11,4 @@ if [[ -n ${FOLDERS} ]]; then
 	sed -i -e "s#\(folders =\).*# \1 ${FOLDERS}#g" ${CONFIG_DIR}"/AirVideoServerLinux.properties"
 fi
 
-RUN chown -R nobody:users /config
+chown -R nobody:users /config
