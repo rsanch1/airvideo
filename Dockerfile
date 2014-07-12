@@ -18,16 +18,10 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 # dependicies of airvideo
-RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 faac openjdk-6-jre avahi-daemon
-
-# install fonts
-RUN apt-get -y --no-install-recommends install ttf-wqy-microhei fonts-dejavu
-
-# curl
-RUN apt-get -y --no-install-recommends install curl
+RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 faac openjdk-6-jre avahi-daemon ttf-wqy-microhei fonts-dejavu curl
 
 # airvideo server's files
-#ADD AirVideoServerLinux.properties /opt/airvideo-server/
+ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
 RUN mkdir -p /opt/airvideo-server/bin
 RUN curl -s http://s3.amazonaws.com/AirVideo/Linux-2.4.6-beta3/AirVideoServerLinux.jar -o /opt/airvideo-server/AirVideoServerLinux.jar
@@ -46,6 +40,8 @@ RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-confi
 	    apt-get autoclean && \
 	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
 	   
+# Clean the build-essential package
+RUN apt-get remove build-essential yasm pkg-config libmp3lame-dev libfaac-dev
 
 # run as nobody instead of root & fix permissions  
 RUN chown -R nobody:users /opt/airvideo-server
