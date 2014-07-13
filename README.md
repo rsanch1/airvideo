@@ -3,6 +3,8 @@ airvideo
 
 airvideo for docker
 
+*testing jfgardim's commits*
+
 
 It seems the path needs to be setup correctly in the run command and in the folder config since there is no config site to enter the path after it is up and running.
 
