@@ -4,7 +4,12 @@ FROM phusion/baseimage:0.9.11
 MAINTAINER rsanch1 <rsanch1@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN locale-gen en_US en_US.UTF-8
+R# Set correct environment variables.
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+# set sane localeRUN locale-gen en_US en_US.UTF-8
+RUN locale-gen en_US.UTF-8
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
