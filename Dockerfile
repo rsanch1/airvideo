@@ -24,27 +24,28 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 # dependicies of airvideo
-RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 faac openjdk-6-jre avahi-daemon ttf-wqy-microhei fonts-dejavu curl
+RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 faac openjdk-6-jre avahi-daemon ttf-wqy-microhei fonts-dejavu vlc curl
 
 # airvideo server's files
 ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
-RUN curl -s http://s3.amazonaws.com/AirVideo/Linux-2.4.6-beta3/AirVideoServerLinux.jar -o /opt/airvideo-server/AirVideoServerLinux.jar
+RUN curl -s https://s3.amazonaws.com/AirVideoHD/Download/AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2 -o /opt/airvideo-server/AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2 &&\
+            tar xf AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2
 RUN mkdir -p /opt/airvideo-server/bin
 
 # compile avconv
-RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
-	    cd /tmp && \
-	    curl -s http://s3.amazonaws.com/AirVideo/Linux-2.4.6-beta3/libav.tar.bz2 -o libav.tar.bz2 && \
-	    tar xf libav.tar.bz2 && \
-	    cd libav && \
-	    ./configure --enable-pthreads --disable-shared --enable-static --enable-gpl --enable-libx264 --enable-libmp3lame --enable-nonfree --enable-libfaac && \
-	    make -j4 && \
-	    strip -s -o /opt/airvideo-server/bin/avconv /tmp/libav/avconv && \
-	    apt-get purge -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
-	    apt-get autoremove -y && \
-	    apt-get autoclean && \
-	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
+#RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
+#	    cd /tmp && \
+#	    curl -s http://s3.amazonaws.com/AirVideo/Linux-2.4.6-beta3/libav.tar.bz2 -o libav.tar.bz2 && \
+#	    tar xf libav.tar.bz2 && \
+#	    cd libav && \
+#	    ./configure --enable-pthreads --disable-shared --enable-static --enable-gpl --enable-libx264 --enable-libmp3lame --enable-nonfree --enable-libfaac && \
+#	    make -j4 && \
+#	    strip -s -o /opt/airvideo-server/bin/avconv /tmp/libav/avconv && \
+#	    apt-get purge -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
+#	    apt-get autoremove -y && \
+#	    apt-get autoclean && \
+#	    rm -rf /tmp/libav.tar.bz2 /tmp/libav
 
 
 # run as nobody instead of root & fix permissions  
