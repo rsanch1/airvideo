@@ -30,7 +30,7 @@ RUN apt-get -y --no-install-recommends install libmp3lame0 libx264-dev libfaac0 
 ADD AirVideoServerLinux.properties /opt/airvideo-server/
 ADD airvideo-server.service /etc/avahi/services/
 RUN curl -s https://s3.amazonaws.com/AirVideoHD/Download/AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2 -o /opt/airvideo-server/AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2 && \
-            tar xf AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2
+            tar xvjf AirVideoServerHD-2.1.0-alpha1-u1.tar.bz2
 RUN mkdir -p /opt/airvideo-server/bin
 
 # compile avconv
