@@ -1,6 +1,6 @@
 # ref: http://www.inmethod.com/forum/posts/list/1856.page
 
-FROM phusion/baseimage:0.9.11
+FROM phusion/baseimage:0.9.16
 MAINTAINER rsanch1 <rsanch1@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -24,7 +24,7 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 # dependicies of airvideo
-RUN apt-get install vlc curl
+RUN apt-get install vlc
 
 # airvideo server's files
 ADD AirVideoServerLinux.properties /opt/airvideo-server/
