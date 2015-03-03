@@ -30,7 +30,7 @@ RUN apt-get -y install vlc curl
 ADD AirVideoServerLinux.properties /opt/airvideoserverHD/
 ADD airvideo-server.service /etc/avahi/services/
 RUN curl -s https://s3.amazonaws.com/AirVideoHD/Download/airvideoserverhd-2.1.0-beta3.tar.bz2 -o /opt/airvideoserverHD/airvideoserverhd-2.1.0-beta3.tar.bz2 && \
-            tar xvjf airvideoserverhd-2.1.0-beta3.tar.bz2
+            tar -xvjf airvideoserverhd-2.1.0-beta3.tar.bz2
 RUN mkdir -p /opt/airvideoserverHD/bin
 
 # compile avconv
