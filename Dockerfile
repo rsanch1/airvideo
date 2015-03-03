@@ -27,11 +27,11 @@ RUN apt-get -y upgrade
 RUN apt-get -y install vlc curl
 
 # airvideo server's files
-ADD AirVideoServerLinux.properties /opt/airvideo-server/
+ADD AirVideoServerLinux.properties /opt/airvideoserverHD/
 ADD airvideo-server.service /etc/avahi/services/
-RUN curl -s https://s3.amazonaws.com/AirVideoHD/Download/airvideoserverhd-2.1.0-beta3.tar.bz2 -o /opt/airvideo-server/airvideoserverhd-2.1.0-beta3.tar.bz2 && \
-            tar xvjf airvideoserverhd-2.1.0-beta3.tar
-RUN mkdir -p /opt/airvideo-server/bin
+RUN curl -s https://s3.amazonaws.com/AirVideoHD/Download/airvideoserverhd-2.1.0-beta3.tar.bz2 -o /opt/airvideoserverHD/airvideoserverhd-2.1.0-beta3.tar.bz2 && \
+            tar xvjf airvideoserverhd-2.1.0-beta3.tar.bz2
+RUN mkdir -p /opt/airvideoserverHD/bin
 
 # compile avconv
 #RUN apt-get install -y build-essential libmp3lame-dev libfaac-dev yasm pkg-config && \
