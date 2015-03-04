@@ -24,7 +24,7 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 # dependicies of airvideo
-RUN apt-get -y install vlc curl
+RUN apt-get -y install vlc wget
 
 # airvideo server's files
 ADD AirVideoServerLinux.properties /opt/airvideoserverHD/
